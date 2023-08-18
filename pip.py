@@ -53,6 +53,8 @@ class Brew(dotbot.Plugin):
         """
         Verifies requirement file exists, and resolves full path
         """
+        if 'packages' in data:
+            return
         path = data.get('file')
         if not path:
             raise ValueError('No requirements file specified')
@@ -86,6 +88,8 @@ class Brew(dotbot.Plugin):
 
         And just return the file path with `-r` for `pip`.
         """
+        if 'packages' in data:
+            return data['packages']
         if directive in [self._pipsi_directive, self._pipx_directive]:
             with open(os.path.join(self.cwd, data['file'])) as r:
                 requirements = r.readlines()
